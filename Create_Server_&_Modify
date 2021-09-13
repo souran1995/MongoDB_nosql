@@ -1,0 +1,37 @@
+*********************************Making Server****************
+
+from bson.objectid import ObjectId
+from pymongo import MongoClient
+
+# Connection
+# CONNECTION_STRING="mongodb+srv://epita:epita@cluster0.28nix.mongodb.net/test?retryWrites=true&w=majority"
+CONNECTION_STRING="mongodb://127.0.0.1/retryWrites=true&w=majority"
+client = MongoClient(CONNECTION_STRING)
+
+# Data base selection
+dbname = client['epita-test']
+
+# Collection selection
+collection_name = dbname["users"]
+
+# Insert the new user
+name = input("Enter name: ")
+collection_name.insert_one({
+    "_id": ObjectId(),
+    "name": name,
+})
+
+
+# Get all the users from the users collection
+users = collection_name.find()
+for user in users:
+        print(user)
+
+*******************************get(Find) a user by name
+#get a user by name
+name2 = input("which user do you look for : ")
+users = list(collection_name.find({"name": name2}))
+if len(users) <= 0:
+        print("There is no user found!")
+else:
+    print(users)
