@@ -1,0 +1,19 @@
+# Get a user by name
+from bson.objectid import ObjectId
+from pymongo import MongoClient
+
+CONNECTION_STRING="mongodb://127.0.0.1/retryWrites=true&w=majority"
+client = MongoClient(CONNECTION_STRING)
+
+
+dbname1 = client['Publish_Books_DBMS']
+collection_name1 = dbname1["books"]
+
+answer1 = str(collection_name1.count_documents({"type": "Book"}))
+print(answer1)
+#we add here $gt to find int values
+answer3 = str(collection_name1.count_documents({"year": 
+                                                {'$gt':2011}
+                                               }))
+print(answer3)
+
